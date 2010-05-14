@@ -188,7 +188,7 @@
       // of the event callback. See the "Double firing issue in jQuery 1.3.2"
       // comments above for more information.
       
-      function new_handler( e, w, h ) {
+      function new_handler( e, w, h, dw, dh ) {
         var elem = $(this),
           data = $.data( this, str_data );
         
@@ -226,12 +226,14 @@
         var elem = $(this),
           width = elem.width(),
           height = elem.height(),
-          data = $.data( this, str_data );
+          data = $.data( this, str_data ),
+          dh = height - data.h,
+          dw = width - data.w;
         
         // If element size has changed since the last time, update the element
         // data store and trigger the 'resize' event.
         if ( width !== data.w || height !== data.h ) {
-          elem.trigger( str_resize, [ data.w = width, data.h = height ] );
+          elem.trigger( str_resize, [ data.w = width, data.h = height, dw, dh ] );
         }
         
       });
